@@ -1,11 +1,11 @@
 import requests
 
 POSTMARK_API_URL = "https://api.postmarkapp.com/email"
-POSTMARK_SERVER_TOKEN = "YOUR_POSTMARK_SERVER_TOKEN"
+POSTMARK_SERVER_TOKEN = "0ecbb6dd-d9a3-4f99-9a63-53701b0e1f45"
 
 def send_email(recipient: str, subject: str, message: str):
     payload = {
-        "From": "your_email@example.com",
+        "From": "tongcm-wm22@student.tarc.edu.my",
         "To": recipient,
         "Subject": subject,
         "TextBody": message,
