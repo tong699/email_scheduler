@@ -7,7 +7,7 @@ POSTMARK_SERVER_TOKEN = os.getenv("POSTMARK_SERVER_TOKEN")  # Use env variable
 def send_email(recipient: str, subject: str, message: str):
     print(f"Sending to: {recipient}, subject: {subject}")
     payload = {
-        "From": "your_verified_sender@example.com",
+        "From": "tongcm-wm22@student.tarc.edu.my",
         "To": recipient,
         "Subject": subject,
         "TextBody": message
