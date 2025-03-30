@@ -14,7 +14,7 @@ class EmailScheduleRequest(BaseModel):
 
 @app.post("/schedule-email")
 def schedule_email_endpoint(request: EmailScheduleRequest):
-    print("Request:", request.dict())
+    print("[API] Schedule request received:", request.dict())
     if request.send_at <= datetime.utcnow():
         raise HTTPException(status_code=400, detail="send_at must be a future time")
 
@@ -27,8 +27,8 @@ def schedule_email_endpoint(request: EmailScheduleRequest):
         )
         return {"job_id": job_id, "message": "Email scheduled successfully"}
     except Exception as e:
-        print("Scheduling error:", e)
-        raise HTTPException(status_code=500, detail=str(e))
+        print("[API] ERROR scheduling email:", e)
+        raise HTTPException(status_code=500, detail="Failed to schedule email. Check logs.")
 
 @app.post("/send-now")
 def send_now(request: EmailScheduleRequest):
