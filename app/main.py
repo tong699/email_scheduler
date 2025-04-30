@@ -10,7 +10,7 @@ class EmailScheduleRequest(BaseModel):
     recipient: str
     subject: str
     message: str
-    send_at: datetime
+    send_at: Optional[datetime] = None
 
 @app.post("/schedule-email")
 def schedule_email_endpoint(request: EmailScheduleRequest):
