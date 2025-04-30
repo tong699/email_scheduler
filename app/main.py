@@ -1,19 +1,22 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from datetime import datetime, timezone
+from typing import Optional
 from app.scheduler import schedule_email
 from app.postmark_client import send_email
 
 app = FastAPI()
 
-class EmailScheduleRequest(BaseModel):
+class SendNowRequest(BaseModel):
     recipient: str
     subject: str
     message: str
-    send_at: Optional[datetime] = None
+
+class ScheduleEmailRequest(SendNowRequest):
+    send_at: datetime
 
 @app.post("/schedule-email")
-def schedule_email_endpoint(request: EmailScheduleRequest):
+def schedule_email_endpoint(request: ScheduleEmailRequest):
     print("[API] Schedule request:", request.dict())
 
     if request.send_at <= datetime.now(timezone.utc):
@@ -31,9 +34,8 @@ def schedule_email_endpoint(request: EmailScheduleRequest):
         print("[API] ERROR scheduling email:", e)
         raise HTTPException(status_code=500, detail="Failed to schedule email. Check logs.")
 
-
 @app.post("/send-now")
-def send_now(request: EmailScheduleRequest):
+def send_now(request: SendNowRequest):
     try:
         send_email(
             recipient=request.recipient,
